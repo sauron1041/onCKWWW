@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script>
+        function getListLoaiSanPham() {
+            return fetch("/getListLoaiSanPham")
+                .then(response => response.json())
+                .then(json=> {
+                    renderData(json);
+                })
+        }
+        function renderData(data) {
+            console.log(data)
+            const tableBody= document.getElementById("tableBody")
+            //Xoa du lieu bang
+            tableBody.innerHTML = "";
+            //Them hang
+            data.forEach(item => {
+                const row = document.createElement("tr");
+                // <tr> </tr>
+                row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.tenLoaiSanPham}</td>
+                        <td><a href="/hienThiSanPham?id=${item.id}">Xem danh sach</a></td>
+                        `;
+                tableBody.appendChild(row);
+            })
+        }
+        getListLoaiSanPham();
+
+    </script>
+</head>
+<body>
+    <a href="/quanLySanPham">Quan ly san pham</a>
+    <br />
+    <table border="2">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Loai san pham</td>
+            <td>Xem danh sach sp theo loai</td>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hien thi san pham</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const loaiId = params.get('id');
+        function getListLoaiSanPham() {
+            return fetch(`/getListSanPhamTheoLoai?id=${loaiId}`)
+                .then(response => response.json())
+                .then(json=> {
+                    renderData(json);
+                })
+        }
+        function renderData(data) {
+            console.log(data)
+            const tableBody= document.getElementById("tableBody")
+            //Xoa du lieu bang
+            tableBody.innerHTML = "";
+            //Them hang
+            data.forEach(item => {
+                const row = document.createElement("tr");
+                // <tr> </tr>
+                row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.tenSanPham}</td>
+                        <td>${item.donGia}</a></td>
+                        `;
+                tableBody.appendChild(row);
+            })
+        }
+        getListLoaiSanPham();
+    </script>
+</head>
+<body>
+<table border="2">
+    <thead>
+    <tr>
+        <td>Id</td>
+        <td>Ten san pham</td>
+        <td>Don gia</td>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+</table>
+</body>
+</html>
