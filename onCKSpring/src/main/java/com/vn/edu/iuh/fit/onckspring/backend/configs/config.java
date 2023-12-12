@@ -30,10 +30,14 @@ public class config {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http.authorizeHttpRequests(auth->auth
+//                .requestMatchers("/my-home", "/danhSachSanPham").permitAll()
+//                .requestMatchers("/quanLySanPham","deleteProduct", "updateProduct", "addNewProduct", "/admin/**").hasRole("ADMIN")
+//                .anyRequest().permitAll()
         http.authorizeHttpRequests(auth->auth
-                .requestMatchers("/my-home", "/deleteProduct", "/danhSachSanPham").permitAll()
-                .requestMatchers("/quanLySanPham").hasRole("ADMIN")
-                .anyRequest().permitAll()
+                .requestMatchers("/","/my-home", "/danhSachSanPham").permitAll()
+                .requestMatchers("/quanLySanPham","deleteProduct", "updateProduct", "addNewProduct", "/admin/**").hasAnyRole("ADMIN")
+                .anyRequest().authenticated()
 
         );
         http.httpBasic(Customizer.withDefaults());

@@ -20,4 +20,11 @@ public class PageController {
     public String hienThiSanPham(@RequestParam long id){
         return "user/HienThiSanPham";
     }
+
+    @GetMapping("/capNhatSanPham")
+    public String capNhatSanPham(@RequestParam long id){
+        return "admin/CapNhatSanPham";
+    }
+
+
 }

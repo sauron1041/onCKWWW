@@ -34,4 +34,29 @@ public class SanPhamService {
     public void delete(long id){
         sanPhamRepository.deleteById(id);
     }
+
+    public void add(String name, long loaiId, double donGia) {
+        LoaiSanPham loaiSanPham= loaiSanPhamService.getLoaiTheoId(loaiId);
+        SanPham newProduct= new SanPham(name, donGia, loaiSanPham);
+        sanPhamRepository.save(newProduct);
+    }
+
+    public SanPham getById(long id) {
+        return sanPhamRepository.findById(id).get();
+    }
+
+    public void update(long id, String name, long loaiId, double donGia) {
+        if(sanPhamRepository.existsById(id)){
+            SanPham product= sanPhamRepository.findById(id).get();
+            LoaiSanPham loaiSanPham= loaiSanPhamService.getLoaiTheoId(loaiId);
+            //Set new data
+
+            product.setTenSanPham(name);
+            product.setLoaiSanPham(loaiSanPham);
+            product.setDonGia(donGia);
+            //Save product
+
+            sanPhamRepository.save(product);
+        }
+    }
 }

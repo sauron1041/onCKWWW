@@ -24,6 +24,34 @@
                 )
                 .catch(error => console.error('Error fetching data:', error));
         }
+        function addNewProduct(){
+            const tenSanPham= document.getElementById("ten").value
+            const loai= document.getElementById("loai").value
+            let loaiSanPham=-1;
+            if(loai=="quanAo")
+                loaiSanPham=1;
+            if(loai=="hangGiaDung")
+                loaiSanPham=2;
+            if(loai=="trangSuc")
+                loaiSanPham=3;
+            const giaSanPham= document.getElementById("donGia").value
+            console.log(tenSanPham, loaiSanPham, giaSanPham)
+
+            //Post data
+            fetch(`addNewProduct?name=${tenSanPham}&loaiId=${loaiSanPham}&donGia=${giaSanPham}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if(response.ok)
+                        alert("Them thanh cong!")
+                })
+                .then(()=>{
+                    getListSanPham();
+                })
+        }
         function renderData(data) {
             console.log(data)
             const tableBody= document.getElementById("tableBody")
@@ -39,6 +67,7 @@
                         <td>${item.loaiSanPham.tenLoaiSanPham}</td>
                         <td>${item.donGia}</td>
                         <td><button onclick="deleteProduct(${item.id})">Delete</button></td>
+                        <td><a href="/capNhatSanPham?id=${item.id}">Update</a></td>
                         `;
                 tableBody.appendChild(row);
             })
@@ -56,10 +85,31 @@
         <td>Loai san pham</td>
         <td>Don gia</td>
         <td>Quan ly</td>
+        <td>Cap nhat</td>
     </tr>
     </thead>
     <tbody id="tableBody">
     </tbody>
 </table>
+<br />
+<h1>Them san pham</h1>
+<div>
+    <div>
+        <label>Ten san pham</label>
+        <input type="text" placeholder="enter ten" id="ten">
+    </div>
+    <div>
+        <select id="loai" >
+            <option value="quanAo">Quan ao</option>
+            <option value="hangGiaDung">Hang gia dung</option>
+            <option value="trangSuc">Trang suc</option>
+        </select>
+    </div>
+    <div>
+        <label>Don gia</label>
+        <input type="text" placeholder="enter don gia" id="donGia">
+    </div>
+    <button type="button" onclick=addNewProduct() >Add new</button>
+</div>
 </body>
 </html>

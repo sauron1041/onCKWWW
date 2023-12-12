@@ -29,4 +29,19 @@ public class SanPhamController {
     public void xoaSanPham(@RequestParam long id){
         sanPhamService.delete(id);
     }
+
+    @PostMapping("/addNewProduct")
+    public void addNewProduct(@RequestParam String name,@RequestParam long loaiId,@RequestParam double donGia){
+        sanPhamService.add(name, loaiId, donGia);
+    }
+
+    @GetMapping("/getProductById")
+    public SanPham getProductById(@RequestParam long id){
+        return sanPhamService.getById(id);
+    }
+
+    @PostMapping("/updateProduct")
+    public void updateProduct(@RequestParam long id, @RequestParam String name,@RequestParam long loaiId,@RequestParam double donGia){
+        sanPhamService.update(id, name, loaiId, donGia);
+    }
 }
